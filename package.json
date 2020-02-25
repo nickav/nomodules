@@ -1,0 +1,8 @@
+{
+  "name": "nomodules",
+  "version": "0.0.0",
+  "main": "src/index.js",
+  "author": "Nick Aversano <nickav@users.noreply.github.com>",
+  "license": "MIT",
+  "private": false
+}
