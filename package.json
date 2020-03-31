@@ -1,8 +1,10 @@
 {
   "name": "nomodules",
   "version": "0.0.1",
-  "main": "src/index.js",
   "author": "Nick Aversano <nickav@users.noreply.github.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "scripts": {
+    "postinstall": "node src/index.js"
+  }
 }
