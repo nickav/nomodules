@@ -20,6 +20,14 @@ const mkdirpSync = (path) => {
   }
 };
 
+const rmSync = (path) => {
+  try {
+    fs.unlinkSync(path);
+  } catch(e) {
+    // NO-OP
+  }
+};
+
 const requireSafe = (file, defaultValue = {}) => {
   if (!fs.existsSync(file) && !fs.existsSync(file + '.js')) {
     return null;
@@ -35,13 +43,18 @@ const requireSafe = (file, defaultValue = {}) => {
 const prettyJson = (obj) => JSON.stringify(obj, null, 2);
 
 const main = () => {
-  const projectPath = path.resolve(__dirname, '../../../');
+  const projectPath = __dirname.includes('node_modules')
+    ? path.resolve(__dirname, '../../../')
+    : path.resolve(__dirname, '../');
+
   const nodeModulesPath = path.resolve(projectPath, 'node_modules');
   const packageJsonPath = path.resolve(projectPath, 'package.json');
 
   // Remove all node modules
   rmdirSync(nodeModulesPath);
-  fs.unlinkSync(path.join(projectPath, 'yarn.lock'));
+  // Remove any lockfiles
+  rmSync(path.join(projectPath, 'yarn.lock'));
+  rmSync(path.join(projectPath, 'package-lock.json'));
   // NOTE(nick): Keep our directory to prevent yarn error
   mkdirpSync(path.join(nodeModulesPath, 'nomodules'));
 
